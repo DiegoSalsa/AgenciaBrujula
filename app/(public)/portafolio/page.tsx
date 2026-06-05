@@ -5,7 +5,12 @@ import { getCategories } from "@/lib/actions";
 export const dynamic = "force-dynamic";
 
 export default async function Portafolio() {
-  const categories = await getCategories();
+  let categories: any[] = [];
+  try {
+    categories = await getCategories();
+  } catch (e) {
+    console.error("Error fetching categories:", e);
+  }
 
   return (
     <div className="flex flex-col pb-24">

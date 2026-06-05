@@ -7,13 +7,21 @@ export const dynamic = "force-dynamic";
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const category = await getCategoryBySlug(slug);
+  let category = null;
+  let projects: any[] = [];
+
+  try {
+    category = await getCategoryBySlug(slug);
+    if (category) {
+      projects = await getPublishedProjectsByCategory(category.id);
+    }
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!category) {
     notFound();
   }
-
-  const projects = await getPublishedProjectsByCategory(category.id);
 
   return (
     <div className="flex flex-col pb-24 min-h-screen">

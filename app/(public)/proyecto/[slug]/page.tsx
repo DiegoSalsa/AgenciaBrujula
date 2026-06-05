@@ -6,7 +6,12 @@ export const dynamic = "force-dynamic";
 
 export default async function ProyectoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  let project = null;
+  try {
+    project = await getProjectBySlug(slug);
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!project) {
     notFound();
