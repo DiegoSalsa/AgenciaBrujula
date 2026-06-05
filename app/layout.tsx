@@ -19,9 +19,6 @@ export const metadata: Metadata = {
   description: "Diseño, branding, redes sociales y marketing digital para marcas que buscan crecer y conectar en el mundo digital.",
 };
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,11 +30,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${baihgale.variable} scroll-smooth antialiased`}
     >
       <body className="min-h-screen flex flex-col font-sans bg-background text-foreground">
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

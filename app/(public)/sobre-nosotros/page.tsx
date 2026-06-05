@@ -58,7 +58,7 @@ export default function SobreNosotros() {
             <div className="bg-white p-12 rounded-[3rem] shadow-xl border-t-[12px] border-brand-primary hover:-translate-y-2 transition-transform">
               <h3 className="font-title text-4xl text-brand-primary mb-6 flex items-center gap-4">
                 <div className="p-3 bg-brand-primary rounded-2xl">
-                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_11.svg" alt="Misión" width={40} height={40} className="w-10 h-10 filter brightness-0 invert" />
+                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_1.svg" alt="Misión" width={40} height={40} className="w-10 h-10" />
                 </div>
                 Nuestra misión
               </h3>
@@ -72,7 +72,7 @@ export default function SobreNosotros() {
             <div className="bg-white p-12 rounded-[3rem] shadow-xl border-t-[12px] border-brand-accent hover:-translate-y-2 transition-transform">
               <h3 className="font-title text-4xl text-brand-primary mb-6 flex items-center gap-4">
                 <div className="p-3 bg-brand-accent rounded-2xl">
-                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_13.svg" alt="Visión" width={40} height={40} className="w-10 h-10" />
+                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_2.svg" alt="Visión" width={40} height={40} className="w-10 h-10" />
                 </div>
                 Nuestra visión
               </h3>
