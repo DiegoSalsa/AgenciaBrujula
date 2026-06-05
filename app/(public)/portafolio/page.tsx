@@ -27,21 +27,21 @@ export default async function Portafolio() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((cat) => (
-              <div key={cat.id} className="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-light flex flex-col justify-end">
+              <Link href={`/portafolio/${cat.slug}`} key={cat.id} className="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-light flex flex-col justify-end block">
                 <div className="absolute inset-0 bg-brand-primary/20 group-hover:bg-brand-primary/40 transition-all z-10"></div>
                 {cat.svg_icon && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-30">
                     <Image src={cat.svg_icon} alt={cat.title} width={150} height={150} className="w-32 h-32" />
                   </div>
                 )}
-                <div className="relative z-20 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                <div className="relative z-20 p-8 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform">
                   <h3 className="font-title text-3xl text-white mb-2 shadow-sm">{cat.title}</h3>
-                  <p className="text-white/90 mb-6 opacity-0 group-hover:opacity-100 transition-opacity delay-100">{cat.description}</p>
-                  <Link href={`/portafolio/${cat.slug}`} className="inline-block bg-white text-brand-primary px-6 py-2 rounded-full font-semibold opacity-0 group-hover:opacity-100 transition-opacity delay-200 hover:bg-brand-accent">
+                  <p className="text-white/90 mb-6 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-100">{cat.description}</p>
+                  <span className="inline-block bg-white text-brand-primary px-6 py-2 rounded-full font-semibold opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity delay-200 group-hover:bg-brand-accent">
                     Ver proyectos
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           
