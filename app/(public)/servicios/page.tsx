@@ -100,7 +100,7 @@ export default function Servicios() {
             </div>
           </div>
           
-          <div className="mt-20 text-center text-2xl text-brand-primary font-bold bg-white inline-block px-12 py-6 rounded-full shadow-md border-2 border-brand-light mx-auto max-w-4xl block relative">
+          <div className="mt-20 text-center text-2xl text-brand-primary font-bold bg-white w-full px-12 py-8 rounded-full shadow-md border-2 border-brand-light relative">
             <span className="relative z-10">Cuéntanos sobre tu proyecto y te ayudaremos a encontrar la mejor alternativa.</span>
           </div>
         </div>
