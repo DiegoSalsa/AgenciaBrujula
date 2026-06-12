@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b-[6px] border-brand-accent shadow-sm">
       <div className="container mx-auto px-4 h-20 md:h-28 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 transform hover:scale-105 transition-transform origin-left z-[60]" onClick={() => setIsOpen(false)}>
+        <Link href="/" className="flex items-center gap-2 transform hover:scale-105 transition-transform origin-left relative z-30" onClick={() => setIsOpen(false)}>
           <Image 
             src="/images/logos/principal/LOGO PRINCIPAL BRUJULA SVG_1.svg" 
             alt="Agencia Brújula Logo" 
@@ -56,8 +56,18 @@ export default function Header() {
 
         {/* Mobile Sidebar */}
         <aside 
-          className={`fixed top-0 right-0 h-[100dvh] w-4/5 max-w-xs bg-white shadow-2xl transition-transform duration-300 ease-in-out transform md:hidden z-50 flex flex-col pt-24 px-8 gap-6 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed top-0 right-0 h-[100dvh] w-4/5 max-w-xs bg-white shadow-2xl transition-transform duration-300 ease-in-out transform md:hidden z-50 flex flex-col pt-10 px-8 gap-6 overflow-y-auto ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
+          {/* Logo inside sidebar */}
+          <div className="mb-4">
+            <Image 
+              src="/images/logos/principal/LOGO PRINCIPAL BRUJULA SVG_2.svg" 
+              alt="Agencia Brújula" 
+              width={300} 
+              height={80} 
+              className="w-36 h-auto"
+            />
+          </div>
           <nav className="flex flex-col gap-5 text-xl font-title text-brand-primary">
             <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Inicio</Link>
             <Link href="/sobre-nosotros" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Sobre Nosotros</Link>
