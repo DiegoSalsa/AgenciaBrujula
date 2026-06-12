@@ -41,12 +41,14 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-center">
-            <div className="relative group order-2 md:order-1">
-              <div className="aspect-square bg-brand-accent rounded-[2rem] md:rounded-[4rem] absolute inset-0 -rotate-6 transform scale-105 group-hover:rotate-0 transition-all duration-700"></div>
-              <div className="aspect-square bg-brand-light rounded-[2rem] md:rounded-[4rem] p-6 sm:p-8 md:p-12 relative flex flex-wrap gap-6 sm:gap-8 md:gap-12 items-center justify-center border-4 border-white shadow-2xl overflow-hidden">
-                <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_5.svg" alt="Element" width={140} height={140} className="w-20 sm:w-24 md:w-32 h-auto animate-float" />
-                <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_7.svg" alt="Element" width={140} height={140} className="w-20 sm:w-24 md:w-32 h-auto hover:scale-125 transition-transform" />
-                <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_9.svg" alt="Element" width={140} height={140} className="w-20 sm:w-24 md:w-32 h-auto animate-spin-slow" />
+            <div className="overflow-hidden p-4 order-2 md:order-1">
+              <div className="relative group">
+                <div className="aspect-square bg-brand-accent rounded-[2rem] md:rounded-[4rem] absolute inset-0 -rotate-3 md:-rotate-6 transform scale-[1.03] md:scale-105 group-hover:rotate-0 transition-all duration-700"></div>
+                <div className="aspect-square bg-brand-light rounded-[2rem] md:rounded-[4rem] p-6 sm:p-8 md:p-12 relative flex flex-wrap gap-6 sm:gap-8 md:gap-12 items-center justify-center border-4 border-white shadow-2xl overflow-hidden">
+                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_5.svg" alt="Element" width={140} height={140} className="w-16 sm:w-24 md:w-32 h-auto animate-float" />
+                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_7.svg" alt="Element" width={140} height={140} className="w-16 sm:w-24 md:w-32 h-auto hover:scale-125 transition-transform" />
+                  <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_9.svg" alt="Element" width={140} height={140} className="w-16 sm:w-24 md:w-32 h-auto animate-spin-slow" />
+                </div>
               </div>
             </div>
             <div className="order-1 md:order-2">

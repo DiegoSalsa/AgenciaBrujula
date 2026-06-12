@@ -38,11 +38,13 @@ export default function SobreNosotros() {
                 </div>
               </div>
             </div>
-            <div className="relative group order-1 md:order-2">
-              <div className="absolute inset-0 bg-brand-accent rounded-[2rem] md:rounded-[3rem] transform rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
-              <div className="absolute inset-0 bg-brand-light rounded-[2rem] md:rounded-[3rem] transform -rotate-3 group-hover:-rotate-6 transition-transform duration-500 delay-75"></div>
-              <div className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative border-4 border-brand-primary flex flex-col justify-center items-center py-16 md:py-24 min-h-[250px] md:min-h-[400px]">
-                <Image src="/images/logos/principal/LOGO PRINCIPAL BRUJULA SVG_1.svg" alt="Brújula" width={400} height={200} className="w-56 sm:w-64 md:w-80 h-auto group-hover:scale-110 transition-transform duration-500" />
+            <div className="overflow-hidden p-4 order-1 md:order-2">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-brand-accent rounded-[2rem] md:rounded-[3rem] transform rotate-3 md:rotate-6 group-hover:rotate-12 transition-transform duration-500"></div>
+                <div className="absolute inset-0 bg-brand-light rounded-[2rem] md:rounded-[3rem] transform -rotate-2 md:-rotate-3 group-hover:-rotate-6 transition-transform duration-500 delay-75"></div>
+                <div className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative border-4 border-brand-primary flex flex-col justify-center items-center py-16 md:py-24 min-h-[250px] md:min-h-[400px]">
+                  <Image src="/images/logos/principal/LOGO PRINCIPAL BRUJULA SVG_1.svg" alt="Brújula" width={400} height={200} className="w-56 sm:w-64 md:w-80 h-auto group-hover:scale-110 transition-transform duration-500" />
+                </div>
               </div>
             </div>
           </div>
