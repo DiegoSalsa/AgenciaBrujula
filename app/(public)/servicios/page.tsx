@@ -112,7 +112,7 @@ export default function Servicios() {
            <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_23.svg" alt="Pattern" fill className="object-cover" />
         </div>
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-20">
+          <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-start">
             
             {/* Redes Sociales */}
             <div className="bg-brand-light/30 rounded-[2rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 border-4 border-brand-light relative hover:shadow-2xl transition-all duration-500 bg-white/60 backdrop-blur-sm">
