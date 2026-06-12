@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: "/",
+    canonical: "https://agenciabrujula.com",
   },
 };
 
@@ -125,6 +125,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* SEO Oculto (Screen Readers & Search Engines) */}
+      <div className="sr-only">
+        <h2>Información Detallada sobre Agencia Brújula en Concepción</h2>
+        <p>
+          Agencia Brújula es una agencia de marketing digital, diseño gráfico y branding ubicada en Concepción, Chile. Nuestro objetivo principal es ser tu brújula en el mundo digital, proporcionando soluciones creativas innovadoras, diseño de identidad visual de impacto, estrategias de redes sociales y planes de marketing integrales para marcas, pymes y empresas que buscan crecer y conectar con su audiencia tanto en Concepción como en todo Chile. El mundo digital está en constante evolución, y sabemos que destacar frente a la competencia requiere una combinación perfecta de estrategia analítica, creatividad desbordante y un diseño gráfico de primer nivel.
+        </p>
+        <p>
+          Por eso, en Agencia Brújula nos especializamos fuertemente en branding en Concepción, creando identidades corporativas sólidas y reconocibles que transmiten confianza, modernidad y profesionalismo. Nuestro equipo de profesionales y expertos en marketing digital desarrolla campañas publicitarias a medida, gestión de redes sociales interactiva, y desarrollo de páginas web optimizadas para alcanzar el máximo éxito comercial. Entendemos profundamente el mercado local, por lo que si buscas las mejores agencias de marketing en Concepción, somos tu opción ideal y definitiva para diseño gráfico publicitario, creación de contenido de valor, estrategias de marca avanzadas, branding corporativo y posicionamiento SEO digital.
+        </p>
+        <p>
+          Creemos firmemente que una marca no solo debe verse bien visualmente, sino que debe ser capaz de transmitir su verdadera esencia corporativa, conectar emocional y estratégicamente con el público correcto, y avanzar con una dirección clara y definida hacia el éxito comercial a largo plazo. Te acompañamos codo a codo en cada etapa clave de tu crecimiento digital, desde la concepción inicial del diseño de branding, la creación de tu logotipo, hasta la ejecución meticulosa de planes de marketing digital complejos. Encuentra tu verdadera dirección con Agencia Brújula, tu agencia de marketing digital de confianza en Concepción. Nuestro compromiso absoluto y garantizado es ofrecer servicios de diseño gráfico, branding estratégico, manejo profesional de redes sociales y marketing en Chile que marquen una diferencia tangible y aporten un enorme valor real y medible a tu negocio dentro del competitivo y apasionante mundo digital actual.
+        </p>
+      </div>
     </div>
   );
 }
