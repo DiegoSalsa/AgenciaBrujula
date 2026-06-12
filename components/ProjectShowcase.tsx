@@ -77,14 +77,14 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
 
   return (
     <div
-      className="min-h-screen relative flex flex-col py-12 md:py-16 overflow-hidden"
+      className="min-h-screen relative flex flex-col py-8 md:py-16 overflow-hidden"
       style={{ backgroundColor: project.backgroundColor, color: project.textColor || "#ffffff" }}
     >
       {/* Back Button */}
-      <div className="absolute top-8 left-8 z-30">
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 z-30">
         <Link
           href={backHref}
-          className="hover:opacity-100 opacity-80 flex items-center gap-2 font-medium transition-opacity bg-black/10 px-4 py-2 rounded-full backdrop-blur-sm w-max"
+          className="hover:opacity-100 opacity-80 flex items-center gap-2 text-sm md:text-base font-medium transition-opacity bg-black/10 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-sm w-max"
         >
           ← Volver
         </Link>
@@ -105,7 +105,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
 
       <div className="flex-1 container mx-auto px-4 max-w-7xl relative z-10 flex flex-col">
         {/* Header / Brand Logo */}
-        <div className="mb-8 md:mb-12 flex flex-col items-center w-full">
+        <div className="mb-6 md:mb-12 flex flex-col items-center w-full mt-6 md:mt-0">
           {hasLogo ? (
             <>
               <Image
@@ -113,12 +113,12 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                 alt={project.title}
                 width={400}
                 height={200}
-                className="w-48 md:w-64 lg:w-80 h-auto mb-2 drop-shadow-lg"
+                className="w-36 sm:w-48 md:w-64 lg:w-80 h-auto mb-2 drop-shadow-lg"
               />
               <h1 className="sr-only">{project.title}</h1>
             </>
           ) : (
-            <h1 className="font-title text-4xl md:text-5xl lg:text-6xl drop-shadow-lg text-center">{project.title}</h1>
+            <h1 className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-lg text-center">{project.title}</h1>
           )}
         </div>
 
@@ -281,13 +281,13 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
         </div> {/* End Main Layout Content */}
 
         {/* Typography / Footer info */}
-        <div className="mt-8 md:mt-12 pt-4 text-center lg:text-left drop-shadow-sm mt-auto">
+        <div className="mt-6 md:mt-12 pt-4 text-center lg:text-left drop-shadow-sm mt-auto">
           {project.subtitle && (
             <p className="text-xs md:text-sm tracking-[0.2em] font-bold uppercase mb-1 opacity-80">
               {project.subtitle}
             </p>
           )}
-          <p className="text-xl md:text-2xl font-medium">{project.title}</p>
+          <p className="text-lg md:text-xl lg:text-2xl font-medium">{project.title}</p>
         </div>
       </div>
     </div>
