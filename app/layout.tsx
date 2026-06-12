@@ -16,12 +16,9 @@ const baihgale = localFont({
 
 export const metadata: Metadata = {
   title: "Agencia Brújula | Marketing y Diseño Gráfico en Concepción",
-  description: "Agencia Brújula: Agencia de marketing digital, branding y diseño gráfico en Concepción, Chile. Soluciones creativas para marcas que buscan crecer y conectar en el mundo digital.",
+  description: "Agencia de marketing digital, branding y diseño gráfico en Concepción. Soluciones creativas para hacer crecer tu marca en el mundo digital.",
   keywords: "agenciabrujula, marketing chile, marketing en concepcion, agencias de marketing concepcion, brujula agencia, agencia brujula, diseño grafico concepcion, branding concepcion, diseño de branding concepcion",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://agenciabrujula.com"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "Agencia Brújula | Marketing y Diseño en Concepción",
     description: "Agencia de branding, marketing digital y diseño gráfico en Concepción, Chile.",
