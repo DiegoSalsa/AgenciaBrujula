@@ -51,30 +51,45 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
               {projects.map((project) => {
-                const firstImage = project.project_images?.[0]?.image_url;
                 return (
                   <Link
                     key={project.id}
                     href={`/proyecto/${project.slug}`}
-                    className="group relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[4/3] flex items-center justify-center shadow-lg hover:-translate-y-2 transition-all duration-300 border-4 border-solid border-transparent hover:border-white/50"
-                    style={{ backgroundColor: project.background_color }}
+                    className="group relative rounded-2xl md:rounded-[2rem] overflow-hidden aspect-[4/3] flex flex-col items-center justify-center shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 border-4 border-solid border-transparent hover:border-white/30"
+                    style={{ backgroundColor: project.background_color || "#551273" }}
                   >
-                    {/* Background image thumbnail */}
-                    {firstImage && (
-                      <Image
-                        src={firstImage}
-                        alt={project.title}
-                        fill
-                        className="object-cover opacity-20 group-hover:opacity-30 transition-opacity"
-                      />
+                    {/* Watermark Background */}
+                    {project.watermark_url && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-10">
+                        <Image
+                          src={project.watermark_url}
+                          alt=""
+                          width={600}
+                          height={600}
+                          className="w-[150%] h-auto object-contain group-hover:scale-110 transition-transform duration-700"
+                        />
+                      </div>
                     )}
-                    <div className="relative z-10 text-center px-4 md:px-6">
-                      <h3 className="font-title text-2xl md:text-3xl text-white drop-shadow-md mb-2">{project.title}</h3>
-                      {project.client_name && (
-                        <p className="text-white/70 text-sm">{project.client_name}</p>
+                    
+                    {/* Centered Logo or Title */}
+                    <div className="relative z-10 flex flex-col items-center p-6 transform group-hover:-translate-y-2 transition-transform duration-300 w-full mb-8 md:mb-12">
+                      {project.logo_url ? (
+                        <Image
+                          src={project.logo_url}
+                          alt={project.title}
+                          width={300}
+                          height={150}
+                          className="w-40 sm:w-48 md:w-56 h-auto drop-shadow-lg"
+                        />
+                      ) : (
+                        <h3 className="font-title text-3xl md:text-4xl text-white drop-shadow-md text-center">{project.title}</h3>
                       )}
-                      <span className="inline-block mt-3 md:mt-4 bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-1.5 rounded-full opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                        Ver proyecto →
+                    </div>
+                    
+                    {/* Permanent Button */}
+                    <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 w-max transition-transform duration-300 group-hover:-translate-y-1">
+                      <span className="inline-block bg-white text-brand-primary font-bold text-sm md:text-base px-5 sm:px-6 py-2 md:py-2.5 rounded-full shadow-md group-hover:bg-brand-accent transition-colors">
+                        Ver proyecto completo →
                       </span>
                     </div>
                   </Link>
