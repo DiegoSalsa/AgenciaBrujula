@@ -3,7 +3,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Obtener la URL base para las imágenes
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://agenciabrujula.cl";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://agenciabrujula.com";
 
 interface ContactData {
   nombre: string;
@@ -14,8 +14,8 @@ interface ContactData {
 }
 
 // Dominios configurables
-const FROM_EMAIL = "contacto@agenciabrujula.cl"; // Cambiar al dominio verificado real
-const TO_EMAIL = "brujulaequipo@gmail.com";
+const FROM_EMAIL = "contacto@agenciabrujula.com"; // Dominio verificado real
+const TO_EMAIL = "diegobullanguero10@gmail.com";
 
 export async function sendContactEmails(data: ContactData) {
   try {
@@ -96,7 +96,7 @@ function getClientEmailHtml(data: ContactData) {
     <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #EED0F2; text-align: center;">
       <p style="font-size: 14px; color: #744D8C; margin: 0;">
         <strong>Agencia Brújula</strong><br/>
-        <a href="https://agenciabrujula.cl" style="color: #551273; text-decoration: none;">agenciabrujula.cl</a>
+        <a href="https://agenciabrujula.com" style="color: #551273; text-decoration: none;">agenciabrujula.com</a>
       </p>
     </div>
   </div>
