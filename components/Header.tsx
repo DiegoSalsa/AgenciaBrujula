@@ -9,11 +9,14 @@ export default function Header() {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -60,8 +63,9 @@ export default function Header() {
 
         {/* Mobile Sidebar Overlay */}
         <div 
-          className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden z-40 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:hidden z-40 cursor-pointer ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           onClick={() => setIsOpen(false)}
+          onTouchStart={() => setIsOpen(false)}
         />
 
         {/* Mobile Sidebar */}
