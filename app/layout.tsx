@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   description: "Agencia Brújula: Agencia de marketing digital, branding y diseño gráfico en Concepción, Chile. Soluciones creativas para marcas que buscan crecer y conectar en el mundo digital.",
   keywords: "agenciabrujula, marketing chile, marketing en concepcion, agencias de marketing concepcion, brujula agencia, agencia brujula, diseño grafico concepcion, branding concepcion, diseño de branding concepcion",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://agenciabrujula.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Agencia Brújula | Marketing y Diseño en Concepción",
     description: "Agencia de branding, marketing digital y diseño gráfico en Concepción, Chile.",
@@ -39,27 +42,51 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Agencia Brújula",
-  "image": "https://agenciabrujula.com/icon.png",
-  "@id": "https://agenciabrujula.com",
-  "url": "https://agenciabrujula.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Concepción",
-    "addressRegion": "Biobío",
-    "addressCountry": "CL"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": -36.820135,
-    "longitude": -73.044390
-  },
-  "priceRange": "$$",
-  "sameAs": [
-    "https://www.instagram.com/agenciabrujula.cl/"
-  ],
-  "description": "Agencia de marketing digital, branding y diseño gráfico en Concepción, Chile."
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://agenciabrujula.com/#organization",
+      "name": "Agencia Brújula",
+      "url": "https://agenciabrujula.com",
+      "logo": "https://agenciabrujula.com/icon.png",
+      "image": "https://agenciabrujula.com/icon.png",
+      "sameAs": [
+        "https://www.instagram.com/agenciabrujula.cl/"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://agenciabrujula.com/#service",
+      "name": "Agencia Brújula",
+      "image": "https://agenciabrujula.com/icon.png",
+      "url": "https://agenciabrujula.com",
+      "telephone": "+56900000000",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Concepción",
+        "addressRegion": "Biobío",
+        "addressCountry": "CL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -36.820135,
+        "longitude": -73.044390
+      },
+      "priceRange": "$$",
+      "description": "Agencia de marketing digital, branding y diseño gráfico en Concepción, Chile."
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://agenciabrujula.com/#webpage",
+      "url": "https://agenciabrujula.com",
+      "name": "Agencia Brújula | Marketing y Diseño Gráfico en Concepción",
+      "datePublished": "2024-01-01T08:00:00+08:00",
+      "dateModified": new Date().toISOString(),
+      "about": {
+        "@id": "https://agenciabrujula.com/#organization"
+      }
+    }
+  ]
 };
 
 export default function RootLayout({
