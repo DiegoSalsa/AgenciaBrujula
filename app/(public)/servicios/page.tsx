@@ -43,7 +43,7 @@ export default function Servicios() {
       </section>
 
       {/* Planes Brújula */}
-      <section className="py-16 md:py-32 bg-brand-light/30 relative overflow-hidden">
+      <section id="planes-brujula" className="py-16 md:py-32 bg-brand-light/30 relative overflow-hidden">
         <div className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3 opacity-10 pointer-events-none hidden md:block">
            <Image src="/images/elements/FONDO/GRAFICOS SVG FONDO_19.svg" alt="Pattern" width={800} height={800} />
         </div>
@@ -124,7 +124,7 @@ export default function Servicios() {
           <div className="grid md:grid-cols-2 gap-10 md:gap-20 items-start">
             
             {/* Redes Sociales */}
-            <div className="bg-brand-light/30 rounded-[2rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 border-4 border-brand-light relative hover:shadow-2xl transition-all duration-500 bg-white/60 backdrop-blur-sm">
+            <div id="redes-sociales" className="bg-brand-light/30 rounded-[2rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 border-4 border-brand-light relative hover:shadow-2xl transition-all duration-500 bg-white/60 backdrop-blur-sm scroll-mt-24">
               <div className="w-16 h-16 md:w-24 md:h-24 bg-brand-primary rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center mb-6 md:mb-10 shadow-lg transform -rotate-6 hover:rotate-0 transition-transform">
                 <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_4.svg" alt="Icon" width={50} height={50} className="w-8 md:w-auto filter brightness-0 invert" />
               </div>
@@ -146,7 +146,7 @@ export default function Servicios() {
             </div>
 
             {/* Diseño Gráfico */}
-            <div className="bg-brand-light/30 rounded-[2rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 border-4 border-brand-light relative hover:shadow-2xl transition-all duration-500 bg-white/60 backdrop-blur-sm mt-0 md:mt-20">
+            <div id="diseno-grafico" className="bg-brand-light/30 rounded-[2rem] md:rounded-[4rem] p-8 sm:p-10 md:p-16 border-4 border-brand-light relative hover:shadow-2xl transition-all duration-500 bg-white/60 backdrop-blur-sm mt-0 md:mt-20 scroll-mt-24">
               <div className="w-16 h-16 md:w-24 md:h-24 bg-brand-primary rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center mb-6 md:mb-10 shadow-lg transform rotate-6 hover:rotate-0 transition-transform">
                 <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_2.svg" alt="Icon" width={50} height={50} className="w-8 md:w-auto filter brightness-0 invert" />
               </div>

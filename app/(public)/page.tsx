@@ -85,7 +85,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-10 md:mb-20 text-brand-primary drop-shadow-sm">Encuentra tu dirección</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-6xl mx-auto">
-            <div className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-primary hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden">
+            <Link href="/servicios#diseno-grafico" className="block bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-primary hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_1.svg" alt="Agencia Brújula - Diseño Gráfico Chile" width={200} height={200} />
               </div>
@@ -94,9 +94,9 @@ export default function Home() {
               </div>
               <h3 className="font-title text-2xl md:text-3xl mb-4 md:mb-6 text-brand-primary">Diseño Gráfico</h3>
               <p className="text-base md:text-lg text-foreground/70 font-medium">Identidad visual y piezas gráficas que destacan por sí solas.</p>
-            </div>
+            </Link>
             
-            <div className="bg-brand-primary p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-accent hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden text-white">
+            <Link href="/servicios#redes-sociales" className="block bg-brand-primary p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-accent hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden text-white">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_1.svg" alt="Agencia Brújula - Marketing Concepción" width={200} height={200} />
               </div>
@@ -105,9 +105,9 @@ export default function Home() {
               </div>
               <h3 className="font-title text-2xl md:text-3xl mb-4 md:mb-6 text-brand-accent">Redes Sociales</h3>
               <p className="text-base md:text-lg text-brand-light font-medium">Estrategia, diseño y gestión de contenido interactivo.</p>
-            </div>
+            </Link>
             
-            <div className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-muted hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden sm:col-span-2 md:col-span-1">
+            <Link href="/servicios#planes-brujula" className="block bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-xl border-b-[8px] border-brand-muted hover:-translate-y-4 transition-transform group cursor-pointer relative overflow-hidden sm:col-span-2 md:col-span-1">
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_1.svg" alt="Brújula Agencia Chile" width={200} height={200} />
               </div>
@@ -116,7 +116,7 @@ export default function Home() {
               </div>
               <h3 className="font-title text-2xl md:text-3xl mb-4 md:mb-6 text-brand-primary">Planes Brújula</h3>
               <p className="text-base md:text-lg text-foreground/70 font-medium">Acompañamos tu marca en cada etapa de crecimiento digital.</p>
-            </div>
+            </Link>
           </div>
           <div className="mt-12 md:mt-20">
             <Link href="/servicios" className="inline-block bg-brand-primary text-white px-8 md:px-12 py-4 md:py-5 rounded-full font-bold text-lg md:text-xl transition-all shadow-xl shadow-brand-primary/20 hover:bg-brand-accent hover:text-brand-primary hover:scale-105">
