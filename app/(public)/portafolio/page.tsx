@@ -1,6 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getCategories } from "@/lib/actions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Portafolio de Diseño y Marketing | Agencia Brújula",
+  description: "Explora el portafolio de Agencia Brújula. Casos de éxito en diseño gráfico, branding, redes sociales y campañas de marketing digital en Concepción y Chile.",
+  alternates: {
+    canonical: "https://agenciabrujula.com/portafolio",
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +62,20 @@ export default async function Portafolio() {
           </div>
         </div>
       </section>
+
+      {/* SEO Oculto (Screen Readers & Search Engines) */}
+      <div className="sr-only">
+        <h2>Portafolio de Agencia Brújula: Diseño gráfico y marketing digital en Concepción</h2>
+        <p>
+          Te invitamos a explorar el portafolio creativo de Agencia Brújula, una recopilación de nuestros mejores trabajos y casos de éxito reales como agencia de marketing digital en Concepción. A lo largo de nuestra trayectoria, hemos tenido el honor de colaborar con empresas, marcas locales y pymes de toda la región, entregando resultados sobresalientes en diseño gráfico publicitario, branding corporativo y posicionamiento de marca. Cada proyecto que visualizas en esta galería es el reflejo de una meticulosa estrategia de diseño pensada para generar impacto visual y cumplir con objetivos comerciales claros en el competitivo mercado actual.
+        </p>
+        <p>
+          Nuestro equipo de expertas aborda cada desafío creativo con una perspectiva única. Entre nuestras especialidades destacadas en el portafolio encontrarás el diseño de logotipos modernos, creación de identidades visuales memorables (manual de marca integral), y el desarrollo completo de campañas gráficas para redes sociales. Al analizar nuestras agencias de marketing en Concepción, notarás que nuestro enfoque se centra en la estética funcional. Creemos firmemente que el buen diseño gráfico en Concepción no solo debe ser hermoso a la vista, sino que debe comunicar eficazmente los valores y la promesa de valor de tu negocio a tu público objetivo.
+        </p>
+        <p>
+          Además del diseño puro, nuestros proyectos integran servicios de manejo de redes sociales (Community Manager) y marketing digital integral, donde las estrategias de comunicación toman forma visual. Te alentamos a revisar en detalle nuestros proyectos de marketing en Chile, categorizados por industria y tipo de servicio. Nuestra brújula creativa está siempre apuntando hacia la innovación. Si te inspira lo que ves y deseas resultados similares o superiores para tu propia empresa, contáctanos. Confía en Agencia Brújula para liderar el proceso de transformar tu marca en un referente digital indiscutible dentro de tu sector.
+        </p>
+      </div>
     </div>
   );
 }

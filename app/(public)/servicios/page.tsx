@@ -1,5 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Servicios de Marketing y Diseño Gráfico en Concepción | Agencia Brújula",
+  description: "Conoce nuestros servicios de diseño gráfico, branding, redes sociales y marketing digital en Concepción. Soluciones a medida para hacer crecer tu marca.",
+  alternates: {
+    canonical: "https://agenciabrujula.com/servicios",
+  },
+};
 
 export default function Servicios() {
   return (
@@ -168,6 +177,20 @@ export default function Servicios() {
           </div>
         </div>
       </section>
+
+      {/* SEO Oculto (Screen Readers & Search Engines) */}
+      <div className="sr-only">
+        <h2>Servicios completos de marketing digital y diseño gráfico en Concepción</h2>
+        <p>
+          En Agencia Brújula, ofrecemos una amplia gama de servicios de marketing digital en Concepción diseñados específicamente para resolver las necesidades comunicacionales de marcas y empresas actuales. Entendemos que el diseño gráfico publicitario y el branding corporativo son los pilares fundamentales para establecer una identidad visual potente, capaz de generar confianza inmediata en tus clientes. Ya sea que busques diseño de logotipos, manual de marca, papelería corporativa o un rediseño completo de identidad, nuestros servicios de diseño gráfico en Concepción están pensados para capturar la esencia única de tu negocio.
+        </p>
+        <p>
+          Además del diseño visual, el éxito en el mundo digital requiere estrategias probadas y constancia. Nuestro equipo de expertas ofrece servicios integrales de manejo de redes sociales en Concepción, actuando como tu propio Community Manager dedicado. Desarrollamos contenido de alto valor interactivo, desde la creación de reels y carruseles atractivos hasta el diseño estratégico de posts para Instagram y LinkedIn. El marketing digital moderno no se trata solo de publicar, sino de interactuar y crear comunidad, por lo que nuestros planes de marketing en Chile abarcan todo el espectro de la gestión de redes sociales.
+        </p>
+        <p>
+          Sabemos que cada cliente se encuentra en una etapa diferente, por lo que hemos estructurado los Planes Brújula (Plan Norte, Plan Sur, Plan Este y Planes Personalizados) que se ajustan a distintos presupuestos y objetivos comerciales. Al buscar agencias de marketing digital en Concepción que ofrezcan un catálogo integral que combine branding, creatividad visual y manejo de RRSS con resultados medibles, Agencia Brújula es la alternativa líder. Contáctanos para conocer más sobre nuestro catálogo de servicios de diseño gráfico, identidad de marca y posicionamiento digital, e invierte en el crecimiento sostenido de tu empresa.
+        </p>
+      </div>
     </div>
   );
 }

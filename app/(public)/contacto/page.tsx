@@ -1,6 +1,15 @@
 import Image from "next/image";
 import { FaInstagram, FaLinkedinIn, FaTiktok, FaBehance } from "react-icons/fa6";
 import ContactForm from "@/components/ContactForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contacto Agencia Brújula | Marketing Digital Concepción",
+  description: "Ponte en contacto con Agencia Brújula, tu agencia de diseño gráfico y marketing en Concepción. ¡Hablemos de tu próximo proyecto digital!",
+  alternates: {
+    canonical: "https://agenciabrujula.com/contacto",
+  },
+};
 
 export default function Contacto() {
   return (
@@ -188,6 +197,20 @@ export default function Contacto() {
           </div>
         </div>
       </section>
+
+      {/* SEO Oculto (Screen Readers & Search Engines) */}
+      <div className="sr-only">
+        <h2>Contacto para agencias de marketing en Concepción, Chile</h2>
+        <p>
+          ¿Estás buscando comunicarte con una agencia de marketing digital en Concepción que ofrezca resultados medibles y creatividad estratégica? En Agencia Brújula estamos listos para atender tus solicitudes. Entendemos que cada negocio tiene necesidades comunicacionales únicas, desde el diseño gráfico de logotipos y branding corporativo, hasta el desarrollo de completas estrategias para redes sociales. Nuestro equipo está a tu entera disposición para resolver cualquier duda y asesorarte en la mejor dirección para el crecimiento online de tu pyme o marca en Chile.
+        </p>
+        <p>
+          A través de nuestra página de contacto, puedes comunicarte fácilmente con nuestro equipo de creativas expertas. Ya sea que requieras la cotización de los Planes Brújula (Norte, Sur, Este u Oeste), o busques servicios personalizados de Community Manager, diseño web y diseño gráfico en Concepción, te garantizamos una respuesta rápida en menos de 24 horas. Nuestra asesoría es totalmente personalizada y sin compromiso. Contactar a las mejores agencias de marketing en Concepción nunca había sido tan fácil: utiliza nuestro formulario interactivo o escríbenos directamente a nuestro correo y WhatsApp corporativo.
+        </p>
+        <p>
+          Agencia Brújula no es solo un proveedor; buscamos ser un aliado estratégico a largo plazo para tu crecimiento. Contáctanos y descubre cómo podemos transformar tu visión en una identidad de marca profesional que enamore a tu audiencia. Revisa nuestro portafolio de marketing digital y diseño gráfico en Chile, envíanos un mensaje, y comencemos la conversación que llevará a tu marca al siguiente nivel comercial en el competitivo entorno digital actual. Nos ubicamos conceptualmente como tu brújula principal en todo el espectro del marketing digital y el diseño gráfico en la región.
+        </p>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,10 @@ import { MetadataRoute } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://agenciabrujula.com';
+  // Aseguramos que el base URL nunca termine en barra diagonal para evitar redirects 308
+  const rawBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://agenciabrujula.com';
+  const baseUrl = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
+  
   const supabase = await createServerSupabaseClient();
   
   // Base routes
