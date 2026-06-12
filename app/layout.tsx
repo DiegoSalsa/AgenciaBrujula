@@ -86,6 +86,8 @@ const jsonLd = {
   ]
 };
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -104,6 +106,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col font-sans bg-background text-foreground">
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
