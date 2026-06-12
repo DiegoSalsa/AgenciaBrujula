@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Servicios() {
   return (
-    <div className="flex flex-col pb-12 md:pb-24">
+    <div className="flex flex-col pb-0">
       <section className="bg-brand-primary pt-24 md:pt-32 pb-16 md:pb-24 text-center text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
            <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_21.svg" alt="Pattern" fill className="object-cover" />
@@ -175,6 +175,24 @@ export default function Servicios() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Banner Ecosistema */}
+      <section className="py-12 md:py-16 bg-brand-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
+           <Image src="/images/elements/SIN FONDO/GRAFICOS SVG SIN FONDO_21.svg" alt="Pattern" fill className="object-cover" />
+        </div>
+        <div className="container mx-auto px-4 max-w-4xl relative z-10 text-center">
+          <h3 className="font-title text-2xl sm:text-3xl md:text-4xl text-brand-accent mb-4">
+            ¿Necesitas una página web profesional para respaldar tu estrategia digital?
+          </h3>
+          <p className="text-brand-light text-lg md:text-xl font-medium mb-8">
+            Conoce nuestro ecosistema de colaboradores y descubre cómo integramos el marketing con la mejor tecnología.
+          </p>
+          <Link href="/ecosistema-digital" className="inline-block bg-white text-brand-primary px-8 py-3 rounded-full font-bold hover:bg-brand-accent transition-colors shadow-lg text-base md:text-lg hover:scale-105">
+            Ver Ecosistema Digital
+          </Link>
         </div>
       </section>
 
