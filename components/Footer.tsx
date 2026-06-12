@@ -51,8 +51,11 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/20 pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between text-brand-light text-xs sm:text-sm">
+        <div className="border-t border-white/20 pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-brand-light text-xs sm:text-sm">
           <p>&copy; {new Date().getFullYear()} Agencia Brújula. Todos los derechos reservados.</p>
+          <p>
+            Desarrollado por <a href="https://www.purocode.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-accent transition-colors font-medium">PuroCode</a>
+          </p>
         </div>
       </div>
     </footer>
