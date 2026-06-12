@@ -95,7 +95,7 @@ function getClientEmailHtml(data: ContactData) {
 
     <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #EED0F2; text-align: center;">
       <a href="https://agenciabrujula.com" style="display: inline-block; margin-bottom: 12px;">
-        <img src="${logoUrl}" alt="Agencia Brújula Logo" style="height: 36px; width: auto;" />
+        <img src="${logoUrl}" alt="Agencia Brújula Logo" style="width: 180px; height: auto;" />
       </a>
       <p style="font-size: 14px; margin: 0;">
         <a href="https://agenciabrujula.com" style="color: #551273; text-decoration: none;">agenciabrujula.com</a>
