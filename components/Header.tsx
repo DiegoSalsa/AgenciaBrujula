@@ -56,28 +56,31 @@ export default function Header() {
 
         {/* Mobile Sidebar */}
         <aside 
-          className={`fixed top-0 right-0 h-[100dvh] w-4/5 max-w-xs bg-white shadow-2xl transition-transform duration-300 ease-in-out transform md:hidden z-50 flex flex-col pt-10 px-8 gap-6 overflow-y-auto ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed top-0 right-0 h-[100dvh] w-4/5 max-w-xs bg-white shadow-2xl transition-transform duration-300 ease-in-out transform md:hidden z-50 flex flex-col overflow-y-auto ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          {/* Logo inside sidebar */}
-          <div className="mb-4">
+          {/* Header area of the sidebar to align with the X button */}
+          <div className="h-20 px-6 flex items-center border-b border-brand-light/20">
             <Image 
               src="/images/logos/principal/LOGO PRINCIPAL BRUJULA SVG_2.svg" 
               alt="Agencia Brújula" 
               width={300} 
               height={80} 
-              className="w-36 h-auto"
+              className="w-28 h-auto"
             />
           </div>
-          <nav className="flex flex-col gap-5 text-xl font-title text-brand-primary">
+          
+          <div className="flex flex-col px-8 pt-8 gap-6 pb-10">
+            <nav className="flex flex-col gap-6 text-xl font-title text-brand-primary">
             <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Inicio</Link>
             <Link href="/sobre-nosotros" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Sobre Nosotros</Link>
             <Link href="/servicios" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Servicios</Link>
             <Link href="/portafolio" onClick={() => setIsOpen(false)} className="hover:text-brand-accent transition-colors">Portafolio</Link>
           </nav>
-          <div className="mt-4">
-            <Link href="/contacto" onClick={() => setIsOpen(false)} className="inline-block bg-brand-primary text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg hover:bg-brand-accent hover:text-brand-primary transition-all">
-              Contáctanos →
-            </Link>
+            <div className="mt-2">
+              <Link href="/contacto" onClick={() => setIsOpen(false)} className="inline-block bg-brand-primary text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg hover:bg-brand-accent hover:text-brand-primary transition-all">
+                Contáctanos →
+              </Link>
+            </div>
           </div>
         </aside>
       </div>
