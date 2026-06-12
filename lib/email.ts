@@ -15,7 +15,7 @@ interface ContactData {
 
 // Dominios configurables
 const FROM_EMAIL = "contacto@agenciabrujula.com"; // Dominio verificado real
-const TO_EMAIL = "diegobullanguero10@gmail.com";
+const TO_EMAIL = "brujulaequipo@gmail.com";
 
 export async function sendContactEmails(data: ContactData) {
   try {
