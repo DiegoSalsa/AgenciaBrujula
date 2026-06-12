@@ -384,3 +384,27 @@ export async function getDashboardStats() {
     published: publishedRes.count || 0,
   };
 }
+
+// =====================================================
+// CONTACT FORM
+// =====================================================
+
+import { sendContactEmails } from "./email";
+
+export async function submitContactForm(formData: FormData) {
+  const data = {
+    nombre: formData.get("nombre") as string,
+    email: formData.get("email") as string,
+    telefono: formData.get("telefono") as string,
+    servicio: formData.get("servicio") as string,
+    mensaje: formData.get("mensaje") as string,
+  };
+
+  // Validación básica
+  if (!data.nombre || !data.email || !data.mensaje) {
+    return { error: "Faltan campos obligatorios" };
+  }
+
+  const result = await sendContactEmails(data);
+  return result;
+}

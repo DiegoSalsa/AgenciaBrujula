@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { submitContactForm } from "@/lib/actions";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -12,17 +13,35 @@ export default function ContactForm() {
   });
   const [submitted, setSubmitted] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Conectar con servicio de email (SendGrid, Resend, etc.)
-    console.log("Form data:", formData);
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    const formDataObj = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataObj.append(key, value);
+    });
+
+    const result = await submitContactForm(formDataObj);
+
+    setLoading(false);
+
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {
@@ -57,6 +76,12 @@ export default function ContactForm() {
         <h3 className="font-title text-2xl md:text-3xl text-brand-primary mb-1">Completa tus datos</h3>
         <p className="text-foreground/50 text-sm font-medium">Los campos con * son obligatorios</p>
       </div>
+
+      {error && (
+        <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm font-medium border border-red-200">
+          {error}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
         <div className="group">
@@ -154,13 +179,16 @@ export default function ContactForm() {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
         <button
           type="submit"
+          disabled={loading}
           id="contact-submit-btn"
-          className="w-full sm:w-auto bg-brand-primary text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-accent hover:text-brand-primary transition-all shadow-lg shadow-brand-primary/20 hover:shadow-brand-accent/30 hover:shadow-xl hover:scale-[1.03] active:scale-100 flex items-center justify-center gap-2"
+          className="w-full sm:w-auto bg-brand-primary text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-accent hover:text-brand-primary transition-all shadow-lg shadow-brand-primary/20 hover:shadow-brand-accent/30 hover:shadow-xl hover:scale-[1.03] active:scale-100 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed"
         >
-          Enviar mensaje
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
+          {loading ? "Enviando..." : "Enviar mensaje"}
+          {!loading && (
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          )}
         </button>
         <p className="text-foreground/40 text-sm font-medium text-center sm:text-left">
           Te responderemos lo antes posible.
