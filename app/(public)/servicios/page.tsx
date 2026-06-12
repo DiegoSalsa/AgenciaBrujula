@@ -64,7 +64,7 @@ export default function Servicios() {
               <p className="text-foreground/70 mb-8 md:mb-10 flex-grow text-base md:text-lg font-medium leading-relaxed">
                 Pensado para marcas personales, creadores de contenido y emprendimientos en etapa inicial.
               </p>
-              <Link href="/contacto" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-primary hover:text-white transition-colors text-base md:text-lg">
+              <Link href="/contacto?plan=norte" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-primary hover:text-white transition-colors text-base md:text-lg">
                 Solicitar información
               </Link>
             </div>
@@ -76,7 +76,7 @@ export default function Servicios() {
               <p className="text-foreground/70 mb-8 md:mb-10 flex-grow text-base md:text-lg font-medium leading-relaxed">
                 Pensado para microempresas y pymes que buscan profesionalizar su presencia digital.
               </p>
-              <Link href="/contacto" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-secondary hover:text-white transition-colors text-base md:text-lg">
+              <Link href="/contacto?plan=sur" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-secondary hover:text-white transition-colors text-base md:text-lg">
                 Solicitar información
               </Link>
             </div>
@@ -88,7 +88,7 @@ export default function Servicios() {
               <p className="text-foreground/70 mb-8 md:mb-10 flex-grow text-base md:text-lg font-medium leading-relaxed">
                 Pensado para empresas que buscan consolidar su presencia digital.
               </p>
-              <Link href="/contacto" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-muted hover:text-white transition-colors text-base md:text-lg">
+              <Link href="/contacto?plan=este" className="block text-center bg-brand-light text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-brand-muted hover:text-white transition-colors text-base md:text-lg">
                 Solicitar información
               </Link>
             </div>
@@ -103,7 +103,7 @@ export default function Servicios() {
               <p className="text-brand-light mb-8 md:mb-10 flex-grow text-base md:text-lg font-medium leading-relaxed relative z-10">
                 ¿Ningún plan se ajusta a lo que necesitas? Creamos uno a tu medida.
               </p>
-              <Link href="/contacto" className="block text-center bg-brand-accent text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-white transition-colors text-base md:text-lg relative z-10 shadow-lg shadow-brand-accent/30">
+              <Link href="/contacto?plan=oeste" className="block text-center bg-brand-accent text-brand-primary font-bold py-3 md:py-4 rounded-full hover:bg-white transition-colors text-base md:text-lg relative z-10 shadow-lg shadow-brand-accent/30">
                 Solicitar información
               </Link>
             </div>

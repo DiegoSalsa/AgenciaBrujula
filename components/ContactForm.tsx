@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { submitContactForm } from "@/lib/actions";
 
-export default function ContactForm() {
+export default function ContactForm({ initialService = "" }: { initialService?: string }) {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
     telefono: "",
-    servicio: "",
+    servicio: initialService,
     mensaje: "",
   });
   const [submitted, setSubmitted] = useState(false);

@@ -11,7 +11,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Contacto() {
+export default async function Contacto({ searchParams }: { searchParams: Promise<{ plan?: string }> }) {
+  const params = await searchParams;
+  const plan = params?.plan;
+
+  let waMessage = "¡Hola! Vengo desde su página web y me gustaría recibir más información sobre Agencia Brújula.";
+  let initialService = "";
+  if (plan === "norte") {
+    waMessage = "¡Hola! Vengo desde su página web y me gustaría solicitar información sobre el Plan Norte.";
+    initialService = "plan-norte";
+  } else if (plan === "sur") {
+    waMessage = "¡Hola! Vengo desde su página web y me gustaría solicitar información sobre el Plan Sur.";
+    initialService = "plan-sur";
+  } else if (plan === "este") {
+    waMessage = "¡Hola! Vengo desde su página web y me gustaría solicitar información sobre el Plan Este.";
+    initialService = "plan-este";
+  } else if (plan === "oeste") {
+    waMessage = "¡Hola! Vengo desde su página web y me gustaría solicitar información sobre el Plan Oeste Personalizado.";
+    initialService = "plan-oeste";
+  }
+
+  const waUrl = `https://wa.me/56990746646?text=${encodeURIComponent(waMessage)}`;
+
   return (
     <div className="flex flex-col pb-12 md:pb-24">
       <section className="bg-brand-primary pt-24 md:pt-32 pb-16 md:pb-24 text-center text-white relative overflow-hidden">
@@ -55,7 +76,7 @@ export default function Contacto() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg md:text-xl text-brand-primary mb-1">WhatsApp</h4>
-                      <a href="https://wa.me/56990746646" target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-brand-accent transition-colors text-lg md:text-2xl font-medium">
+                      <a href={waUrl} target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-brand-accent transition-colors text-lg md:text-2xl font-medium">
                         (+56) 9 9074 6646
                       </a>
                     </div>
@@ -106,7 +127,7 @@ export default function Contacto() {
                 <p className="text-lg sm:text-xl md:text-2xl mb-8 md:mb-12 relative z-10 font-medium text-brand-light leading-relaxed">Nosotros podemos ayudarte a comunicarlo y conectarlo con tu audiencia ideal.</p>
 
                 <div className="relative z-10 mt-2 md:mt-4">
-                  <a href="https://wa.me/56990746646" target="_blank" rel="noopener noreferrer" className="inline-block bg-brand-accent text-brand-primary px-8 md:px-10 py-4 md:py-5 rounded-full font-bold text-lg md:text-xl hover:bg-white hover:scale-105 transition-all shadow-[0_0_30px_rgba(243,185,0,0.4)]">
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer" className="inline-block bg-brand-accent text-brand-primary px-8 md:px-10 py-4 md:py-5 rounded-full font-bold text-lg md:text-xl hover:bg-white hover:scale-105 transition-all shadow-[0_0_30px_rgba(243,185,0,0.4)]">
                     Solicitar info por WhatsApp
                   </a>
                 </div>
@@ -191,7 +212,7 @@ export default function Contacto() {
                 <Image src="/images/logos/principal/ICONO PRINCIPAL BRUJULA SVG.svg" alt="" width={300} height={300} className="w-48 md:w-72 h-auto" />
               </div>
               <div className="relative z-10">
-                <ContactForm />
+                <ContactForm initialService={initialService} />
               </div>
             </div>
           </div>
