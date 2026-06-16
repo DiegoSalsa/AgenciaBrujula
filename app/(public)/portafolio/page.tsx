@@ -55,7 +55,7 @@ export default async function Portafolio() {
           </div>
           
           <div className="mt-10 md:mt-16 text-center">
-            <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 md:gap-3 bg-brand-primary text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg hover:bg-brand-secondary transition-all">
+            <a href="https://www.behance.net/agenciabrujula" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 md:gap-3 bg-brand-primary text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg hover:bg-brand-secondary transition-all">
               Visita nuestro Behance completo
               <span className="text-xl md:text-2xl leading-none">→</span>
             </a>

@@ -38,7 +38,7 @@ export default function Footer() {
                 <a href="https://instagram.com/agenciabrujula.ccp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent hover:text-brand-primary transition-all text-xl md:text-2xl group">
                   <FaInstagram className="group-hover:scale-110 transition-transform" />
                 </a>
-                <a href="https://linkedin.com/company/agencia-brujula" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent hover:text-brand-primary transition-all text-xl md:text-2xl group">
+                <a href="https://www.linkedin.com/company/agencia-br%C3%BAjula/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent hover:text-brand-primary transition-all text-xl md:text-2xl group">
                   <FaLinkedinIn className="group-hover:scale-110 transition-transform" />
                 </a>
                 <a href="https://tiktok.com/@agenciabrujula.ccp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-brand-accent hover:text-brand-primary transition-all text-xl md:text-2xl group">
