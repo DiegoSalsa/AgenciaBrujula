@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ImageUploader from "./ImageUploader";
-import { createProject, updateProject, addProjectImage, deleteProjectImage, updateProjectImage, uploadFile } from "@/lib/actions";
+import { createProject, updateProject, addProjectImage, addProjectVideo, deleteProjectImage, updateProjectImage, uploadFile } from "@/lib/actions";
 import { convertToWebP } from "@/lib/imageUtils";
 import { LAYOUT_TEMPLATES, ASPECT_RATIOS } from "@/lib/layoutTemplates";
 import Image from "next/image";
-import { FiTrash2, FiPlus, FiLoader, FiSave } from "react-icons/fi";
+import { FiFilm, FiImage, FiTrash2, FiPlus, FiLoader, FiSave } from "react-icons/fi";
 
 interface Category {
   id: string;
@@ -18,6 +18,14 @@ interface Category {
 interface ProjectImage {
   id: string;
   image_url: string;
+  media_type?: "image" | "video";
+  video_url?: string | null;
+  cloudinary_public_id?: string | null;
+  cloudinary_resource_type?: string | null;
+  video_duration?: number | null;
+  video_width?: number | null;
+  video_height?: number | null;
+  file_size_bytes?: number | null;
   alt_text: string | null;
   sort_order: number;
   aspect_ratio: string;
@@ -43,6 +51,16 @@ interface ProjectFormProps {
     project_images: ProjectImage[];
   } | null;
 }
+
+const isCloudinaryVideoUrl = (url?: string | null) => {
+  return !!url && url.includes("res.cloudinary.com") && url.includes("/video/upload/");
+};
+
+const getCloudinaryVideoPoster = (videoUrl: string) => {
+  return videoUrl
+    .replace("/video/upload/", "/video/upload/f_jpg,so_0,w_900,h_1600,c_fill/")
+    .replace(/\.[^/.?#]+(?=($|[?#]))/, ".jpg");
+};
 
 export default function ProjectForm({ categories, project }: ProjectFormProps) {
   const router = useRouter();
@@ -121,54 +139,97 @@ export default function ProjectForm({ categories, project }: ProjectFormProps) {
     router.refresh();
   };
 
-  const handleGridImageUpload = async (files: FileList) => {
+  const handleDeleteImage = async (imageId: string) => {
+    const result = await deleteProjectImage(imageId);
+    if (result.success) {
+      setImages((prev) => prev.filter((img) => img.id !== imageId));
+    }
+  };
+
+  const handleGridMediaUpload = async (files: FileList) => {
     if (!isEditing) {
-      alert("Primero guarda el proyecto, luego podrás subir imágenes al grid.");
+      alert("Primero guarda el proyecto, luego podras subir medios al grid.");
       return;
     }
 
     setUploadingGrid(true);
 
     for (const file of Array.from(files)) {
-      // Convert to WebP before uploading
-      let processedFile: File;
-      try {
-        processedFile = await convertToWebP(file);
-      } catch {
-        processedFile = file;
-      }
+      if (file.type.startsWith("video/")) {
+        if (file.size > 100 * 1024 * 1024) {
+          alert(`${file.name} supera el limite de 100 MB.`);
+          continue;
+        }
 
-      const formData = new FormData();
-      formData.append("file", processedFile);
-      formData.append("folder", `projects/${project!.slug}`);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("folder", `projects/${project!.slug}/videos`);
+        formData.append("alt_text", file.name);
+        formData.append("aspect_ratio", "story");
 
-      const uploadResult = await uploadFile(formData);
-      if (uploadResult.url) {
-        const addResult = await addProjectImage(project!.id, uploadResult.url, file.name);
+        const addResult = await addProjectVideo(project!.id, formData);
         if (addResult.success && addResult.image) {
           setImages((prev) => [
             ...prev,
             {
               id: addResult.image.id,
-              image_url: uploadResult.url!,
+              image_url: addResult.image.image_url,
+              media_type: "video",
+              video_url: addResult.image.image_url,
+              cloudinary_public_id: null,
+              cloudinary_resource_type: "video",
+              video_duration: null,
+              video_width: null,
+              video_height: null,
+              file_size_bytes: file.size,
               alt_text: file.name,
               sort_order: prev.length,
-              aspect_ratio: "square",
+              aspect_ratio: addResult.image.aspect_ratio || "story",
             },
           ]);
+        } else if (addResult.error) {
+          alert("Error al subir video: " + addResult.error);
+        }
+
+        continue;
+      }
+
+      if (file.type.startsWith("image/")) {
+        let processedFile: File;
+        try {
+          processedFile = await convertToWebP(file);
+        } catch {
+          processedFile = file;
+        }
+
+        const formData = new FormData();
+        formData.append("file", processedFile);
+        formData.append("folder", `projects/${project!.slug}`);
+
+        const uploadResult = await uploadFile(formData);
+        if (uploadResult.url) {
+          const addResult = await addProjectImage(project!.id, uploadResult.url, file.name);
+          if (addResult.success && addResult.image) {
+            setImages((prev) => [
+              ...prev,
+              {
+                id: addResult.image.id,
+                image_url: uploadResult.url!,
+                media_type: "image",
+                alt_text: file.name,
+                sort_order: prev.length,
+                aspect_ratio: "square",
+              },
+            ]);
+          }
+        } else if (uploadResult.error) {
+          alert("Error al subir imagen: " + uploadResult.error);
         }
       }
     }
 
     setUploadingGrid(false);
     router.refresh();
-  };
-
-  const handleDeleteImage = async (imageId: string) => {
-    const result = await deleteProjectImage(imageId);
-    if (result.success) {
-      setImages((prev) => prev.filter((img) => img.id !== imageId));
-    }
   };
 
   const handleUpdateImageRatio = async (imageId: string, ratio: string) => {
@@ -284,6 +345,9 @@ export default function ProjectForm({ categories, project }: ProjectFormProps) {
                 <p className="mt-2 text-xs text-white/50">
                   {LAYOUT_TEMPLATES.find(t => t.id === layoutTemplate)?.description}
                 </p>
+                <p className="mt-2 text-xs text-brand-accent/90">
+                  Videos: usa Reels verticales o Grid mixto imagen/video. Los layouts con celular necesitan una imagen de mockup.
+                </p>
               </div>
               
               {/* Preview Layout Box */}
@@ -356,19 +420,19 @@ export default function ProjectForm({ categories, project }: ProjectFormProps) {
         </div>
       </div>
 
-      {/* Grid Images */}
+      {/* Grid Media */}
       <div className="bg-white/5 rounded-2xl p-6 space-y-5 border border-white/10">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-white">Imágenes del grid ({images.length})</h3>
+          <h3 className="text-lg font-semibold text-white">Medios del grid ({images.length})</h3>
           {isEditing && (
             <label className="flex items-center gap-2 px-4 py-2 bg-brand-accent text-[#0f0314] rounded-xl font-medium text-sm cursor-pointer hover:bg-brand-accent/80 transition-colors">
               <FiPlus className="w-4 h-4" />
-              Agregar
+              Agregar imagen/video
               <input
                 type="file"
-                accept="image/*"
+                accept="image/*,video/mp4,video/webm,video/quicktime"
                 multiple
-                onChange={(e) => e.target.files && handleGridImageUpload(e.target.files)}
+                onChange={(e) => e.target.files && handleGridMediaUpload(e.target.files)}
                 className="hidden"
               />
             </label>
@@ -376,13 +440,13 @@ export default function ProjectForm({ categories, project }: ProjectFormProps) {
         </div>
 
         {!isEditing && (
-          <p className="text-sm text-white/50">Guarda el proyecto primero para poder subir imágenes al grid.</p>
+          <p className="text-sm text-white/50">Guarda el proyecto primero para poder subir imagenes y videos al grid.</p>
         )}
 
         {uploadingGrid && (
           <div className="flex items-center gap-2 text-brand-accent text-sm">
             <FiLoader className="w-4 h-4 animate-spin" />
-            Subiendo imágenes...
+            Subiendo medios...
           </div>
         )}
 
@@ -390,12 +454,38 @@ export default function ProjectForm({ categories, project }: ProjectFormProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((img) => (
               <div key={img.id} className="relative group rounded-xl overflow-hidden aspect-square bg-white/5">
-                <Image
-                  src={img.image_url}
-                  alt={img.alt_text || ""}
-                  fill
-                  className="object-cover"
-                />
+                {(img.media_type === "video" || isCloudinaryVideoUrl(img.image_url)) ? (
+                  <>
+                    <Image
+                      src={isCloudinaryVideoUrl(img.image_url) ? getCloudinaryVideoPoster(img.image_url) : img.image_url}
+                      alt={img.alt_text || "Video"}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 220px"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-brand-primary shadow-lg">
+                        <FiFilm className="h-5 w-5" />
+                      </div>
+                    </div>
+                    <span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                      Video
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Image
+                      src={img.image_url}
+                      alt={img.alt_text || ""}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 220px"
+                      className="object-cover"
+                    />
+                    <span className="absolute left-2 top-2 rounded-full bg-black/45 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                      <FiImage className="inline h-3 w-3" /> Imagen
+                    </span>
+                  </>
+                )}
                 
                 {/* Image Actions Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">

@@ -3,6 +3,7 @@
 import { createServerSupabaseClient } from "./supabase-server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { createHash } from "crypto";
 
 // =====================================================
 // AUTH
@@ -130,7 +131,7 @@ export async function getPublishedProjectsByCategory(categoryId: string) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("projects")
-    .select("*, project_images(id, image_url, sort_order)")
+    .select("*, project_images(*)")
     .eq("category_id", categoryId)
     .eq("is_published", true)
     .order("sort_order", { ascending: true });
@@ -143,7 +144,7 @@ export async function getProjectBySlug(slug: string) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("projects")
-    .select("*, categories(title, slug), project_images(id, image_url, alt_text, sort_order, aspect_ratio)")
+    .select("*, categories(title, slug), project_images(*)")
     .eq("slug", slug)
     .single();
 
@@ -161,7 +162,7 @@ export async function getProjectById(id: string) {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("projects")
-    .select("*, categories(title, slug), project_images(id, image_url, alt_text, sort_order, aspect_ratio)")
+    .select("*, categories(title, slug), project_images(*)")
     .eq("id", id)
     .single();
 
@@ -258,6 +259,78 @@ export async function togglePublish(id: string, currentState: boolean) {
 // PROJECT IMAGES
 // =====================================================
 
+type CloudinaryUploadResponse = {
+  secure_url?: string;
+  public_id?: string;
+  resource_type?: string;
+  duration?: number;
+  bytes?: number;
+  width?: number;
+  height?: number;
+  error?: { message?: string };
+};
+
+const MAX_VIDEO_SIZE_BYTES = 100 * 1024 * 1024;
+
+function getCloudinaryConfig() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+  const apiKey = process.env.CLOUDINARY_API_KEY;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+  if (!cloudName || !apiKey || !apiSecret) {
+    throw new Error("Faltan variables de entorno de Cloudinary.");
+  }
+
+  return { cloudName, apiKey, apiSecret };
+}
+
+function signCloudinaryParams(params: Record<string, string | number>, apiSecret: string) {
+  const signatureBase = Object.entries(params)
+    .filter(([, value]) => value !== "" && value !== undefined && value !== null)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+
+  return createHash("sha1").update(`${signatureBase}${apiSecret}`).digest("hex");
+}
+
+function getCloudinaryVideoPublicId(videoUrl?: string | null) {
+  if (!videoUrl) return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const parts = url.pathname.split("/").filter(Boolean);
+    const uploadIndex = parts.indexOf("upload");
+    if (uploadIndex === -1 || parts[uploadIndex - 1] !== "video") return null;
+
+    let publicParts = parts.slice(uploadIndex + 1);
+    if (publicParts[0]?.startsWith("v") && /^v\d+$/.test(publicParts[0])) {
+      publicParts = publicParts.slice(1);
+    }
+
+    return publicParts.join("/").replace(/\.[^/.]+$/, "");
+  } catch {
+    return null;
+  }
+}
+
+async function destroyCloudinaryVideo(publicId: string) {
+  const { cloudName, apiKey, apiSecret } = getCloudinaryConfig();
+  const timestamp = Math.round(Date.now() / 1000);
+  const signature = signCloudinaryParams({ public_id: publicId, timestamp }, apiSecret);
+  const formData = new FormData();
+
+  formData.append("public_id", publicId);
+  formData.append("timestamp", String(timestamp));
+  formData.append("api_key", apiKey);
+  formData.append("signature", signature);
+
+  await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/video/destroy`, {
+    method: "POST",
+    body: formData,
+  });
+}
+
 export async function addProjectImage(projectId: string, imageUrl: string, altText?: string, aspectRatio?: string) {
   const supabase = await createServerSupabaseClient();
 
@@ -286,6 +359,72 @@ export async function addProjectImage(projectId: string, imageUrl: string, altTe
   return { success: true, image: data };
 }
 
+export async function addProjectVideo(projectId: string, formData: FormData) {
+  const supabase = await createServerSupabaseClient();
+  const file = formData.get("file") as File;
+  const folder = formData.get("folder") as string || "projects/videos";
+  const altText = formData.get("alt_text") as string || file?.name || "Video";
+  const aspectRatio = formData.get("aspect_ratio") as string || "story";
+
+  if (!file) return { error: "No se recibio ningun video." };
+  if (!file.type.startsWith("video/")) return { error: "El archivo debe ser un video." };
+  if (file.size > MAX_VIDEO_SIZE_BYTES) return { error: "El video supera el limite de 100 MB." };
+
+  let cloudinaryData: CloudinaryUploadResponse;
+
+  try {
+    const { cloudName, apiKey, apiSecret } = getCloudinaryConfig();
+    const timestamp = Math.round(Date.now() / 1000);
+    const uploadFolder = `agencia-brujula/${folder}`;
+    const signature = signCloudinaryParams({ folder: uploadFolder, timestamp }, apiSecret);
+    const uploadForm = new FormData();
+
+    uploadForm.append("file", file);
+    uploadForm.append("folder", uploadFolder);
+    uploadForm.append("timestamp", String(timestamp));
+    uploadForm.append("api_key", apiKey);
+    uploadForm.append("signature", signature);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/video/upload`, {
+      method: "POST",
+      body: uploadForm,
+    });
+
+    cloudinaryData = await response.json();
+
+    if (!response.ok || !cloudinaryData.secure_url || !cloudinaryData.public_id) {
+      return { error: cloudinaryData.error?.message || "No se pudo subir el video a Cloudinary." };
+    }
+
+    const { data: existing } = await supabase
+      .from("project_images")
+      .select("sort_order")
+      .eq("project_id", projectId)
+      .order("sort_order", { ascending: false })
+      .limit(1);
+
+    const nextOrder = existing && existing.length > 0 ? existing[0].sort_order + 1 : 0;
+    const { data, error } = await supabase.from("project_images").insert({
+      project_id: projectId,
+      image_url: cloudinaryData.secure_url,
+      alt_text: altText || null,
+      sort_order: nextOrder,
+      aspect_ratio: aspectRatio,
+    }).select().single();
+
+    if (error) {
+      await destroyCloudinaryVideo(cloudinaryData.public_id);
+      return { error: error.message };
+    }
+
+    revalidatePath("/admin/proyectos");
+    revalidatePath("/portafolio");
+    return { success: true, image: data };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Error subiendo video." };
+  }
+}
+
 export async function updateProjectImage(imageId: string, updates: { aspect_ratio?: string; alt_text?: string }) {
   const supabase = await createServerSupabaseClient();
   const { error } = await supabase.from("project_images").update(updates).eq("id", imageId);
@@ -299,9 +438,20 @@ export async function updateProjectImage(imageId: string, updates: { aspect_rati
 
 export async function deleteProjectImage(imageId: string) {
   const supabase = await createServerSupabaseClient();
+  const { data: media } = await supabase
+    .from("project_images")
+    .select("image_url")
+    .eq("id", imageId)
+    .single();
+
   const { error } = await supabase.from("project_images").delete().eq("id", imageId);
 
   if (error) return { error: error.message };
+
+  const publicId = getCloudinaryVideoPublicId(media?.image_url);
+  if (publicId) {
+    await destroyCloudinaryVideo(publicId);
+  }
 
   revalidatePath("/admin/proyectos");
   revalidatePath("/portafolio");

@@ -25,11 +25,25 @@ export default async function ProyectoPage({ params }: { params: Promise<{ slug:
     textColor: project.text_color || "#ffffff",
     logoSrc: project.logo_url || "",
     watermarkLogoSrc: project.watermark_url || "",
-    gridImages: (project.project_images || []).map((img: { image_url: string; alt_text?: string; aspect_ratio?: "square" | "story" | "landscape" | "portrait" }) => ({
-      url: img.image_url,
-      alt: img.alt_text || "",
-      aspectRatio: img.aspect_ratio || "square",
-    })),
+    gridImages: (project.project_images || []).map((img: {
+      image_url: string;
+      alt_text?: string;
+      aspect_ratio?: "square" | "story" | "landscape" | "portrait";
+      media_type?: "image" | "video";
+      video_url?: string;
+      video_duration?: number;
+    }) => {
+      const isCloudinaryVideo = img.image_url.includes("res.cloudinary.com") && img.image_url.includes("/video/upload/");
+
+      return {
+        url: img.image_url,
+        alt: img.alt_text || "",
+        aspectRatio: img.aspect_ratio || (isCloudinaryVideo ? "story" : "square"),
+        mediaType: img.media_type || (isCloudinaryVideo ? "video" : "image"),
+        videoUrl: img.video_url || (isCloudinaryVideo ? img.image_url : ""),
+        duration: img.video_duration,
+      };
+    }),
     mobileImageSrc: project.mobile_image_url || "",
     categorySlug: (project.categories as { slug: string } | null)?.slug || "portafolio",
     layoutTemplate: project.layout_template || "grid-left-phone-right",

@@ -6,6 +6,9 @@ interface ShowcaseImage {
   url: string;
   alt?: string;
   aspectRatio?: "square" | "story" | "landscape" | "portrait";
+  mediaType?: "image" | "video";
+  videoUrl?: string;
+  duration?: number;
 }
 
 const getAspectClass = (ratio?: string) => {
@@ -15,6 +18,25 @@ const getAspectClass = (ratio?: string) => {
     case "portrait": return "aspect-[4/5] row-span-2";
     default: return "aspect-square";
   }
+};
+
+const getGalleryAspectClass = (ratio?: string) => {
+  switch (ratio) {
+    case "story": return "aspect-[9/16]";
+    case "landscape": return "aspect-[4/3]";
+    case "square": return "aspect-square";
+    default: return "aspect-[4/5]";
+  }
+};
+
+const isCloudinaryVideoUrl = (url?: string) => {
+  return !!url && url.includes("res.cloudinary.com") && url.includes("/video/upload/");
+};
+
+const getCloudinaryVideoPoster = (videoUrl: string) => {
+  return videoUrl
+    .replace("/video/upload/", "/video/upload/f_jpg,so_0,w_900,h_1600,c_fill/")
+    .replace(/\.[^/.?#]+(?=($|[?#]))/, ".jpg");
 };
 
 interface ProjectShowcaseProps {
@@ -30,6 +52,49 @@ interface ProjectShowcaseProps {
     categorySlug?: string;
     layoutTemplate?: string;
   };
+}
+
+function MediaPreview({
+  item,
+  idx,
+  imageSizes = "(max-width: 768px) 50vw, 320px",
+}: {
+  item: ShowcaseImage;
+  idx: number;
+  imageSizes?: string;
+}) {
+  const isVideo = item.mediaType === "video" || isCloudinaryVideoUrl(item.url);
+  const videoUrl = item.videoUrl || (isVideo ? item.url : "");
+  const posterUrl = isCloudinaryVideoUrl(item.url) ? getCloudinaryVideoPoster(item.url) : item.url;
+
+  if (isVideo && videoUrl) {
+    return (
+      <>
+        <video
+          src={videoUrl}
+          poster={posterUrl}
+          controls
+          preload="none"
+          playsInline
+          className="h-full w-full object-cover"
+          aria-label={item.alt || `Video ${idx + 1}`}
+        />
+        <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-black/55 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+          Reel
+        </span>
+      </>
+    );
+  }
+
+  return (
+    <Image
+      src={item.url}
+      alt={item.alt || `Imagen ${idx + 1}`}
+      fill
+      sizes={imageSizes}
+      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+    />
+  );
 }
 
 function ImageGrid({ images, className = "" }: { images: ShowcaseImage[]; className?: string }) {
@@ -48,12 +113,7 @@ function ImageGrid({ images, className = "" }: { images: ShowcaseImage[]; classN
           key={idx}
           className={`${getAspectClass(img.aspectRatio)} relative rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.25)] group bg-white/5`}
         >
-          <Image
-            src={img.url}
-            alt={img.alt || `Post ${idx + 1}`}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
-          />
+          <MediaPreview item={img} idx={idx} />
         </div>
       ))}
     </div>
@@ -61,21 +121,17 @@ function ImageGrid({ images, className = "" }: { images: ShowcaseImage[]; classN
 }
 
 function GalleryOnly({ images }: { images: ShowcaseImage[] }) {
+  const isSingle = images.length === 1;
+
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 items-center">
+    <div className={`w-full mx-auto ${isSingle ? "max-w-md" : "max-w-6xl"}`}>
+      <div className={isSingle ? "flex justify-center" : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 items-center"}>
         {images.map((img, idx) => (
           <div
             key={idx}
-            className={`relative overflow-hidden rounded-xl md:rounded-2xl bg-white/[0.08] shadow-[0_18px_50px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.15] group ${img.aspectRatio === "landscape" ? "aspect-[4/3]" : "aspect-[4/5]"} ${idx % 2 === 1 ? "lg:translate-y-8" : ""}`}
+            className={`relative overflow-hidden rounded-xl md:rounded-2xl bg-white/[0.08] shadow-[0_18px_50px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.15] group ${isSingle ? "w-full" : ""} ${getGalleryAspectClass(img.aspectRatio)} ${!isSingle && idx % 2 === 1 ? "lg:translate-y-8" : ""}`}
           >
-            <Image
-              src={img.url}
-              alt={img.alt || `Imagen ${idx + 1}`}
-              fill
-              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 260px"
-              className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-            />
+            <MediaPreview item={img} idx={idx} imageSizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 260px" />
           </div>
         ))}
       </div>
@@ -208,12 +264,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                   key={idx}
                   className={`relative rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.25)] group bg-white/5 ${getAspectClass(img.aspectRatio).replace("row-span-2", "")}`}
                 >
-                  <Image
-                    src={img.url}
-                    alt={img.alt || `Post ${idx + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
+                  <MediaPreview item={img} idx={idx} />
                 </div>
               )) : <div className="flex-1 py-24 text-center border-2 border-dashed border-current opacity-40 rounded-2xl">Sin imágenes en el grid</div>}
             </div>
@@ -234,12 +285,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                       key={idx}
                       className={`relative rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.25)] group bg-white/5 ${getAspectClass(img.aspectRatio).replace('row-span-2', '')}`}
                     >
-                      <Image
-                        src={img.url}
-                        alt={img.alt || `Post ${idx + 1}`}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+                      <MediaPreview item={img} idx={idx} />
                     </div>
                   ))}
                 </div>
@@ -264,12 +310,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                       key={idx}
                       className={`relative rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.25)] group bg-white/5 ${getAspectClass(img.aspectRatio).replace('row-span-2', '')}`}
                     >
-                      <Image
-                        src={img.url}
-                        alt={img.alt || `Post ${idx + 1}`}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+                      <MediaPreview item={img} idx={idx} />
                     </div>
                   ))}
                 </div>

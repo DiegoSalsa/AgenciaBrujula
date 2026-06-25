@@ -78,7 +78,7 @@ export default async function ProyectosPage() {
                   <p className="text-sm text-white/60 mb-3">Cliente: {project.client_name}</p>
                 )}
                 <p className="text-xs text-white/30">
-                  {(project.project_images as { id: string }[])?.length || 0} imágenes
+                  {(project.project_images as { id: string }[])?.length || 0} medios
                 </p>
 
                 {/* Actions */}
